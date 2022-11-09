@@ -9,7 +9,6 @@ const StartGameScreen = () => {
         style={styles.numberInput}
         maxLength={2}
         keyboardType="number-pad"
-        returnKeyType="done"
         selectionColor={"#ddb52f"}
       />
       <View style={styles.buttonContainer}>
