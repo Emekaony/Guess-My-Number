@@ -1,12 +1,8 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
 const PrimaryButton = (props) => {
-  const pressedHandler = () => {
-    console.log("Pressable has been pressed");
-  };
-
   return (
-    <View onPress={pressedHandler} style={styles.buttonOuterContainer}>
+    <View style={styles.buttonOuterContainer}>
       <Pressable
         style={({ pressed }) =>
           pressed
@@ -17,6 +13,7 @@ const PrimaryButton = (props) => {
               ]
             : [styles.buttonInnerContainer, props.style]
         }
+        onPress={props.onPress}
       >
         <Text style={styles.buttonText}>{props.children}</Text>
       </Pressable>
