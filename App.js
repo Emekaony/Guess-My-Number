@@ -4,25 +4,40 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
+import Colors from "./constants/colors";
+import GameOverScreen from "./screens/GameOverScreen";
 
 export default function App() {
-  const [pickedNumber, setpickedNumber] = useState(null);
+  const [pickedNumber, setpickedNumber] = useState();
+  const [gameOver, setGameOver] = useState(true);
 
   const pickedNumberHandler = (pickedNumber) => {
     setpickedNumber(pickedNumber);
+    setGameOver(false);
   };
 
-  // conditionally render start or game screen based on whether a number has been chosen or not.
-  // pass a funciton through props that's gonna be called when a number is successifully chosen
-  // we hold that number as a state variable so the component is rerendered and the new screen takes effect
+  const gameOverHandler = () => {
+    setGameOver(true);
+  };
+
   let screen = <StartGameScreen onNumberPicked={pickedNumberHandler} />;
 
   if (pickedNumber) {
-    screen = <GameScreen />;
+    console.log(`Sending ${pickedNumber} to gameScreen as prop`);
+    screen = (
+      <GameScreen userNumber={pickedNumber} onGameOver={gameOverHandler} />
+    );
+  }
+
+  if (gameOver && pickedNumber) {
+    screen = <GameOverScreen />;
   }
 
   return (
-    <LinearGradient style={styles.rootScreen} colors={["#4e0329", "#ddb52f"]}>
+    <LinearGradient
+      style={styles.rootScreen}
+      colors={[Colors.primary700, Colors.accent500]}
+    >
       <ImageBackground
         source={require("./assets/images/background.png")}
         resizeMode="cover"
