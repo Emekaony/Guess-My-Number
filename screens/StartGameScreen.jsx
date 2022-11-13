@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, View, Alert } from "react-native";
+import { StyleSheet, TextInput, View, Alert, Text } from "react-native";
 
 import PrimaryButton from "../components/ui/PrimaryButton";
+import Title from "../components/ui/Title";
 import Colors from "../constants/colors";
+import Card from "../components/ui/Card";
+import InstructionText from "../components/ui/InstructionText";
 
 const StartGameScreen = (props) => {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -36,39 +39,41 @@ const StartGameScreen = (props) => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        selectionColor={Colors.accent500}
-        onChangeText={numberInputHandler}
-        value={enteredNumber}
-      />
-      <View style={styles.buttonContainer}>
-        <View style={{ width: "50%" }}>
-          <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText>Enter A Number</InstructionText>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          selectionColor={Colors.accent500}
+          onChangeText={numberInputHandler}
+          value={enteredNumber}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={{ width: "50%" }}>
+            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={{ width: "50%" }}>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+          </View>
         </View>
-        <View style={{ width: "50%" }}>
-          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-        </View>
-      </View>
+      </Card>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    padding: 16,
+  rootContainer: {
+    flex: 1,
     marginTop: 100,
-    marginHorizontal: 24,
-    borderRadius: 8,
-    backgroundColor: Colors.primary800,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.8,
     alignItems: "center",
+  },
+  instructionText: {
+    color: Colors.accent500,
+    fontSize: 30,
+    fontWeight: "bold",
   },
   numberInput: {
     height: 50,

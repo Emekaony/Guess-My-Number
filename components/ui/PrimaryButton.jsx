@@ -4,16 +4,12 @@ import Colors from "../../constants/colors";
 
 const PrimaryButton = (props) => {
   return (
-    <View style={styles.buttonOuterContainer}>
+    <View style={[styles.buttonOuterContainer, props.style]}>
       <Pressable
         style={({ pressed }) =>
           pressed
-            ? [
-                styles.buttonInnerContainer,
-                styles.buttonInnerContainerPressed,
-                props.pressedStyle,
-              ]
-            : [styles.buttonInnerContainer, props.style]
+            ? [styles.buttonInnerContainer, styles.buttonInnerContainerPressed]
+            : [styles.buttonInnerContainer]
         }
         onPress={props.onPress}
       >
