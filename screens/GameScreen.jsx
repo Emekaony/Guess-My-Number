@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, Text, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -20,11 +20,13 @@ const generateRandomNumberBetween = (min, max, exclude) => {
 
 let minBoundary = 1;
 let maxBoundary = 100;
-let numGuesses = 0;
 
 const GameScreen = ({ userNumber, onGameOver, onGuessChanged }) => {
   const initialGuess = generateRandomNumberBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guessRounds, setGuessRounds] = useState([
+    { guess: initialGuess, id: initialGuess },
+  ]);
 
   // this is a react hook that runs immediately after a component is rendered
   useEffect(() => {
@@ -35,9 +37,13 @@ const GameScreen = ({ userNumber, onGameOver, onGuessChanged }) => {
     }
   }, [currentGuess, userNumber, onGameOver]);
 
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
+
   function nextGuessHandler(direction) {
-    numGuesses++;
-    onGuessChanged(numGuesses);
+    onGuessChanged();
     console.log(
       `Current guess is: ${currentGuess}\nDirection is: ${direction}`
     );
@@ -63,7 +69,15 @@ const GameScreen = ({ userNumber, onGameOver, onGuessChanged }) => {
       currentGuess
     );
     setCurrentGuess(newRandomNumber);
+    setGuessRounds((prev) => [
+      { guess: newRandomNumber, id: newRandomNumber },
+      ...prev,
+    ]);
   }
+
+  const roundRenderer = ({ item, index, separators }) => {
+    return <PrimaryButton>{item.guess}</PrimaryButton>;
+  };
 
   return (
     <View style={styles.screen}>
@@ -86,7 +100,14 @@ const GameScreen = ({ userNumber, onGameOver, onGuessChanged }) => {
           </PrimaryButton>
         </View>
       </Card>
-      <View>{/* LOG ROUNDS */}</View>
+      <View style={styles.listContainer}>
+        <FlatList
+          renderItem={roundRenderer}
+          data={guessRounds}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator="none"
+        />
+      </View>
     </View>
   );
 };
@@ -104,6 +125,10 @@ const styles = StyleSheet.create({
   button: {
     width: "40%",
     marginVertical: 20,
+  },
+  listContainer: {
+    flex: 1,
+    padding: 16,
   },
 });
 

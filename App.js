@@ -36,8 +36,16 @@ export default function App() {
     return null;
   }
 
-  const numberOfGuessesHandler = (guesses) => {
-    setGuesses(guesses);
+  const numberOfGuessesHandler = () => {
+    setGuesses((guesses) => {
+      // state is read-only. SO this is how you update it by passing a function
+      return guesses + 1;
+    });
+  };
+
+  const newGameHandler = () => {
+    setGuesses(0);
+    setpickedNumber(null);
   };
 
   const pickedNumberHandler = (pickedNumber) => {
@@ -64,7 +72,13 @@ export default function App() {
   }
 
   if (gameOver && pickedNumber) {
-    screen = <GameOverScreen numberOfGuesses={guesses} />;
+    screen = (
+      <GameOverScreen
+        numberOfGuesses={guesses}
+        userNumber={pickedNumber}
+        newGameSelected={newGameHandler}
+      />
+    );
   }
 
   return (
