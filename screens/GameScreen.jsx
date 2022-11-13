@@ -20,8 +20,9 @@ const generateRandomNumberBetween = (min, max, exclude) => {
 
 let minBoundary = 1;
 let maxBoundary = 100;
+let numGuesses = 0;
 
-const GameScreen = ({ userNumber, onGameOver }) => {
+const GameScreen = ({ userNumber, onGameOver, onGuessChanged }) => {
   const initialGuess = generateRandomNumberBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
@@ -35,6 +36,8 @@ const GameScreen = ({ userNumber, onGameOver }) => {
   }, [currentGuess, userNumber, onGameOver]);
 
   function nextGuessHandler(direction) {
+    numGuesses++;
+    onGuessChanged(numGuesses);
     console.log(
       `Current guess is: ${currentGuess}\nDirection is: ${direction}`
     );

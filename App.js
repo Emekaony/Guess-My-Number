@@ -15,6 +15,7 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [pickedNumber, setpickedNumber] = useState();
   const [gameOver, setGameOver] = useState(true);
+  const [guesses, setGuesses] = useState(0);
 
   // show the splash screen while these fonts are being loaded
   const [fontsLoaded] = useFonts({
@@ -35,6 +36,10 @@ export default function App() {
     return null;
   }
 
+  const numberOfGuessesHandler = (guesses) => {
+    setGuesses(guesses);
+  };
+
   const pickedNumberHandler = (pickedNumber) => {
     setpickedNumber(pickedNumber);
     setGameOver(false);
@@ -46,15 +51,20 @@ export default function App() {
 
   let screen = <StartGameScreen onNumberPicked={pickedNumberHandler} />;
 
+  // once we have picked a number, go to the GameScreen
   if (pickedNumber) {
     console.log(`Sending ${pickedNumber} to gameScreen as prop`);
     screen = (
-      <GameScreen userNumber={pickedNumber} onGameOver={gameOverHandler} />
+      <GameScreen
+        userNumber={pickedNumber}
+        onGameOver={gameOverHandler}
+        onGuessChanged={numberOfGuessesHandler}
+      />
     );
   }
 
   if (gameOver && pickedNumber) {
-    screen = <GameOverScreen />;
+    screen = <GameOverScreen numberOfGuesses={guesses} />;
   }
 
   return (
