@@ -21,4 +21,4 @@ The following **user stories** were implemented in the app
 
 Here's a walkthrough of implemented user stories
 
-![pre_work]()
+![pre_work](https://github.com/Emekaony/Guess-My-Number/blob/main/assets/images/guess_my_number.gif)
