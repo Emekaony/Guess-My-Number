@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 24,
+    alignItems: "center",
   },
   buttonStyles: {
     flexDirection: "row",
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     padding: 16,
+    width: "92%",
   },
 });
 

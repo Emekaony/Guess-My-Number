@@ -1,12 +1,13 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
 import PrimaryButton from "../components/ui/PrimaryButton";
+import Colors from "../constants/colors";
 
 const GameOverScreen = ({ numberOfGuesses, userNumber, newGameSelected }) => {
   return (
-    <View>
+    <View style={styles.rootContainer}>
       <View style={styles.gameOverTitle}>
         <InstructionText>Game Over!</InstructionText>
       </View>
@@ -33,19 +34,29 @@ const GameOverScreen = ({ numberOfGuesses, userNumber, newGameSelected }) => {
   );
 };
 
+const deviceWidth = Dimensions.get("window").deviceWidth;
+
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    padding: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   gameOverTitle: {
     alignItems: "center",
   },
   imageContainer: {
     alignItems: "center",
-    marginTop: 50,
+    width: deviceWidth < 380 ? 150 : 300,
+    height: deviceWidth < 380 ? 150 : 300,
+    borderRadius: deviceWidth < 380 ? 75 : 150,
+    marginTop: 20,
+    borderWidth: 3,
+    borderColor: Colors.accent500,
+    overflow: "hidden",
   },
-  imageStyle: {
-    width: 300,
-    height: 300,
-    borderRadius: 150,
-  },
+  imageStyle: {},
   textStyle: {
     textAlign: "center",
   },
